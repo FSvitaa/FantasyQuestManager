@@ -1,0 +1,21 @@
+Fantasy Quest Manager
+
+Hotová druhá fáze zadání.
+
+---
+
+Funkce:
+
+-OOP struktura (dědičnost, polymorfismus, zapouzdření)
+-konkrétní třídy hrdinů (Válečník, Mág, Lukostřelec)
+-validace dat
+-kontrola unikátních ID
+-práce se surovými daty (data.ts)
+-oživení objektů z dat
+-výpis a výpočty v konzoli
+
+---
+
+Výsledek:
+
+Program načte data, vytvoří hrdiny a vypíše jejich statistiky do konzole.
