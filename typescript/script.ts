@@ -1,9 +1,10 @@
-// Fanstasy Quest Manager - jednoduchý základ
+// Fantasy Quest Manager - jednoduchý základ
 
 import { Rasa, dataHrdinu } from "./data.js";
 
-//Abstraktní třída Hrdina
+// Hlavní logika pro tvorbu hrdinů a výpočty statistik
 
+//Abstraktní třída reprezentující společné chování hrdiny
 abstract class Hrdina {
     private id: number;
     private jmeno: string;
@@ -66,7 +67,7 @@ abstract class Hrdina {
         this.rasa = rasa
     }
 
-    //Gettery
+    // Gettery: přístup k základním vlastnostem
     public getId(): number {
         return this.id;
     }
@@ -87,12 +88,12 @@ abstract class Hrdina {
         return this.rasa.nazev;
     }
 
-    //Abstraktni metody
+    // Abstraktní metody: implementuje každá specializovaná třída
     abstract vypocitejFinalniHP(): number;
     abstract vypocitejFinalniPoskozeni(): number;
     abstract getPovolani(): string;
 
-    //Vypis informaci
+    // Vypíše přehled informací o hrdinovi do konzole
     public vypisInfo(): void {
 
     console.log("===============================");
@@ -120,8 +121,7 @@ abstract class Hrdina {
 }
 }
 
-//Třída Válečník
-
+//Třída Válečník — silný bojovník orientovaný na fyzické poškození
 class Valecnik extends Hrdina {
 
     constructor(
@@ -136,13 +136,15 @@ class Valecnik extends Hrdina {
     ) {
         super(id, jmeno, level, 120, sila, obratnost, inteligence, vydrz, rasa);
     }
-     public vypocitejFinalniHP(): number {
+    // Výpočet finálního HP pro válečníka
+    public vypocitejFinalniHP(): number {
 
         return this.getZakladniHP()
             + (this.vydrz + this.rasa.bonusVydrz) * 20
             + this.getLevel() * 10;
     }
 
+    // Výpočet finálního poškození pro válečníka
     public vypocitejFinalniPoskozeni(): number {
 
         return (this.sila + this.rasa.bonusSila) * 5
@@ -154,8 +156,7 @@ class Valecnik extends Hrdina {
     }
 }
 
-//Třída Mág
-
+//Třída Mág — kouzelník zaměřený na magické poškození
 class Mag extends Hrdina {
 
     constructor(
@@ -170,13 +171,14 @@ class Mag extends Hrdina {
     ) {
         super(id, jmeno, level, 80, sila, obratnost, inteligence, vydrz, rasa);
     }
-        public vypocitejFinalniHP(): number {
-        
-            return this.getZakladniHP()
+    // Výpočet finálního HP pro mága
+    public vypocitejFinalniHP(): number {
+        return this.getZakladniHP()
             + (this.vydrz + this.rasa.bonusVydrz) * 10
             + this.getLevel() * 5;
     }
 
+    // Výpočet finálního poškození pro mága
     public vypocitejFinalniPoskozeni(): number {
         return (this.inteligence + this.rasa.bonusInteligence) * 9
             + this.getLevel() * 3;
@@ -187,8 +189,7 @@ class Mag extends Hrdina {
     }
 }
 
-//Třída Lukostřelec
-
+//Třída Lukostřelec — střelec využívající obratnost
 class Lukostrelec extends Hrdina {
     
     constructor(
@@ -203,13 +204,15 @@ class Lukostrelec extends Hrdina {
     ) {
         super(id, jmeno, level, 100, sila, obratnost, inteligence, vydrz, rasa);
     }
-        public vypocitejFinalniHP(): number {
+    // Výpočet finálního HP pro lukostřelce
+    public vypocitejFinalniHP(): number {
 
         return this.getZakladniHP()
             + (this.vydrz + this.rasa.bonusVydrz) * 15
             + this.getLevel() * 7;
     }
 
+    // Výpočet finálního poškození pro lukostřelce
     public vypocitejFinalniPoskozeni(): number {
         return (this.obratnost + this.rasa.bonusObratnost) * 7
             + this.getLevel() * 2;
@@ -220,13 +223,13 @@ class Lukostrelec extends Hrdina {
     }
 }
 
-//Oživení dat
-
+// Oživení dat: vytvoří instance hrdinů podle `dataHrdinu`
 const pouzitaId = new Set<number>();
 const parta: Hrdina[] = [];
 
 for (const data of dataHrdinu) {
 
+    // Kontrola duplikace ID
     if (pouzitaId.has(data.id)) {
         throw new Error(`ID ${data.id} je již použito`);
     }
@@ -234,6 +237,7 @@ for (const data of dataHrdinu) {
 
     let hrdina: Hrdina;
 
+    // Vytvoření správné třídy podle typu postavy
     switch (data.typ) {
 
         case "valecnik":
@@ -289,6 +293,7 @@ console.log("======= AKTIVNÍ DRUŽINA =======");
 let celkovePoskozeni = 0;
 let celkovaHP = 0;
 
+// Výpis jednotlivých hrdinů a souhrnné statistiky družiny
 for (const hrdina of parta) {
 
     hrdina.vypisInfo();

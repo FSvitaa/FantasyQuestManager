@@ -1,21 +1,17 @@
 Fantasy Quest Manager
 
-Hotová druhá fáze zadání.
+Lehká úprava/dokončení druhé fáze.
 
 ---
 
-Funkce:
+Změny:
 
--OOP struktura (dědičnost, polymorfismus, zapouzdření)
--konkrétní třídy hrdinů (Válečník, Mág, Lukostřelec)
--validace dat
--kontrola unikátních ID
--práce se surovými daty (data.ts)
--oživení objektů z dat
--výpis a výpočty v konzoli
+-Přidané komentáře ke třídám a důležitým částem kódu
+-Oprava gramatických chyb v textu a názvech
+-Lehké úpravy a zpřehlednění kódu
 
 ---
 
 Výsledek:
 
-Program načte data, vytvoří hrdiny a vypíše jejich statistiky do konzole.
+-Finální druhá fáze, přehledně zdokumentovaná a v konzoli plně funkční.

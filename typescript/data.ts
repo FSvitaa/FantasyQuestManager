@@ -1,5 +1,4 @@
-//Datový číselník ras
-
+// Datový typ popisující rasu a její bonusy
 export type Rasa = {
     nazev: string;
     bonusSila: number;
@@ -8,6 +7,7 @@ export type Rasa = {
     bonusVydrz: number;
 }
 
+// Seznam dostupných ras s atributovými bonusy
 export const Rasy: Rasa[] = [
     {
         nazev: "Trpaslík",
@@ -39,8 +39,7 @@ export const Rasy: Rasa[] = [
     }
 ];
 
-//Surová data pro hrdiny
-
+// Počáteční data hrdinů použité pro oživení instance
 export const dataHrdinu = [
 
     {
