@@ -1,17 +1,31 @@
-Fantasy Quest Manager
+# 🛡️ Generátor Hrdinů (Družina)
 
-Lehká úprava/dokončení druhé fáze.
-
----
-
-Změny:
-
--Přidané komentáře ke třídám a důležitým částem kódu
--Oprava gramatických chyb v textu a názvech
--Lehké úpravy a zpřehlednění kódu
+Interaktivní webová aplikace pro tvorbu a správu RPG postav, napsaná v **TypeScriptu** s využitím objektově orientovaného programování (OOP) a stylovaná pomocí **Tailwind CSS**.
 
 ---
 
-Výsledek:
+## 🚀 Funkce aplikace
 
--Finální druhá fáze, přehledně zdokumentovaná a v konzoli plně funkční.
+* **Tvorba a úprava postav:** Možnost vytvořit nového hrdinu nebo zpětně editovat stávajícího (aplikace automaticky dopočítá rozdělené body).
+* **Systém ras s bonusy:** Každá rasa (Člověk, Elf, Trpaslík, Ork, Temný elf, Skřítek) má své unikátní pozitivní i negativní modifikátory atributů.
+* **Unikátní povolání (OOP Polymorfismus):** * 🛡️ **Válečník:** Vysoký základ HP, poškození škáluje ze Síly.
+* 🔮 **Mág:** Křehký hrdina, poškození masivně škáluje z Inteligence.
+* 🏹 **Lukostřelec:** Vyvážený střed, poškození škáluje z Obratnosti.
+* **Globální statistiky:** Živý souhrn celkového počtu životů (HP) a poškození (DMG) celé tvé družiny.
+
+---
+
+## 🛠️ Použité technologie
+
+* **TypeScript** (Abstraktní třídy, Zapouzdření, Gettery)
+* **HTML5 & Tailwind CSS** (Moderní, plně responzivní design)
+* **Git & GitHub** (Verzování kódu)
+
+---
+
+## 📂 Struktura kódu (TypeScript)
+
+Projekt je postaven na principech čistého OOP:
+
+* `abstract class Hrdina`: Hlavní šablona s validací vstupů v konstruktoru a zapouzdřenými daty (`private`/`protected`).
+* `class Valecnik`, `class Mag`, `class Lukostrelec`: Podtřídy, které dědí z hlavního hrdiny a přepisují (`override`) výpočty finálního poškození a životů podle vlastních vzorců.

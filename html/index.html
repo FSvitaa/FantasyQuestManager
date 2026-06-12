@@ -4,9 +4,111 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fantasy Quest Manager</title>
+    <!-- CSS FRAMEWORK - Tailwind CSS pro přitahující design -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    
+<body class="p-4 md:p-8 min-h-screen font-sans bg-stone-950 text-stone-100">
+    <!-- HLAVNÍ CONTAINER -->
+    <main class="max-w-4xl mx-auto">
+        
+        <!-- HLAVIČKA - Logo a nadpis aplikace -->
+        <header class="text-center mb-8 border-b border-amber-800 pb-4">
+            <h1 class="text-3xl md:text-5xl font-bold text-amber-500 uppercase tracking-wider">Fantasy Quest Manager</h1>
+            <p class="text-amber-200/70 mt-2 font-medium">Správa herní družiny</p>
+        </header>
+
+        <!-- SEKCE S HRDINY (seznam a formulář se tu střídají) -->
+        <section id="sekce-druzina" class="block space-y-6">
+            <!-- HEADER S NADPISEM A TLAČÍTKEM -->
+            <header class="flex flex-col sm:flex-row justify-between items-center gap-4">
+                <h2 class="text-2xl font-semibold text-amber-400">Aktivní hrdinové</h2>
+                <!-- TLAČÍTKO NA VYTVOŘENÍ NOVÉHO HRDINU -->
+                <button id="btn-jit-vytvorit" class="bg-amber-600 hover:bg-amber-500 text-white font-bold py-3 px-6 rounded-lg cursor-pointer transition transform hover:scale-105">
+                     ➕ Vytvořit nového hrdinu
+                </button>
+            </header>
+
+            <!-- KONTEJNER NA KARTY HRDINŮ (tady se kreslí postavy) -->
+            <section id="kontejner-postav" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                </section>
+
+            <!-- CELKOVÝ STATUS DRUŽINY (dole se zobrazuje součet všech HP a DMG) -->
+            <aside id="souhrn-druziny" class="bg-stone-900 border border-amber-900/40 p-6 rounded-xl shadow-xl">
+                <h3 class="text-xl font-bold text-amber-500 mb-4 text-center sm:text-left uppercase text-sm tracking-wide">Celkový status družiny</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-center">
+                    <!-- CELKOVÁ HP -->
+                    <section class="bg-stone-950 p-3 rounded border border-red-950/50">
+                        <p class="text-xs text-stone-400 font-medium uppercase tracking-wider">Celková Životnost</p>
+                        <strong id="celkova-hp" class="block text-2xl font-bold text-red-500 mt-1">0 HP</strong>
+                    </section>
+                    <!-- CELKOVÝ ÚTOK -->
+                    <section class="bg-stone-950 p-3 rounded border border-orange-950/50">
+                        <p class="text-xs text-stone-400 font-medium uppercase tracking-wider">Celková Útočná Síla</p>
+                        <strong id="celkovy-utok" class="block text-2xl font-bold text-orange-500 mt-1">0 DMG</strong>
+                    </section>
+                </div>
+            </aside>
+        </section>
+
+        <!-- FORMULÁŘ NA VYTVOŘENÍ/ÚPRAVU HRDINU (schován na start) -->
+        <section id="sekce-tvorba" class="hidden bg-stone-900 border border-amber-800/60 p-6 rounded-2xl shadow-2xl">
+            <!-- NADPIS - Změní se podle toho jestli vytváříš nebo edituješ -->
+            <h2 id="nadpis-formularu" class="text-2xl font-bold text-amber-400 text-center mb-6 uppercase tracking-wide">Nový hrdina</h2>
+            
+            <form class="space-y-6" onsubmit="return false;">
+                <!-- SKRYTÝ INPUT - Ulož si ID hrdiny když edituješ (abys věděl kterého měnit) -->
+                <input type="hidden" id="editace-id" value="">
+
+                <!-- ZÁKLADNÍ INFORMACE -->
+                <fieldset class="space-y-4">
+                    <div>
+                        <label for="vstup-jmeno" class="block text-sm font-semibold text-amber-200 mb-2">Jméno hrdiny</label>
+                        <input type="text" id="vstup-jmeno" placeholder="Zadej jméno hrdiny..." class="w-full bg-stone-950 border border-stone-800 rounded-lg p-3 text-white focus:outline-none focus:border-amber-500">
+                    </div>
+
+                    <div>
+                        <label for="vstup-level" class="block text-sm font-semibold text-amber-200 mb-2">Počáteční Level</label>
+                        <input type="number" id="vstup-level" value="1" min="1" class="w-full bg-stone-950 border border-stone-800 rounded-lg p-3 text-white focus:outline-none focus:border-amber-500">
+                    </div>
+                </fieldset>
+
+                <!-- VÝBĚR POVOLÁNÍ (kolotoč se 3 možnostmi) -->
+                <nav class="space-y-2">
+                    <label class="block text-sm font-semibold text-amber-200 text-center">Zvol si své povolání</label>
+                    <div class="flex items-center justify-center gap-4">
+                        <!-- KONTEJNER NA KOLOTOČ -->
+                        <div id="sf-pas-povolani" class="flex items-center justify-center gap-6 md:gap-8 min-h-[140px] bg-stone-950 border border-stone-900 p-6 rounded-2xl max-w-md mx-auto my-6 shadow-2xl"></div>
+                    </div>
+                </nav>
+
+                <!-- VÝBĚR RASY (s bonusy) -->
+                <nav class="space-y-2">
+                    <label class="block text-sm font-semibold text-amber-200 mb-2">Výběr rasy (Atributové modifikátory)</label>
+                    <menu id="vyber-rasy-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 p-0 m-0"></menu>
+                </nav>
+
+                <!-- ROZDĚLOVÁNÍ BODŮ - Síla, Obratnost, Intelekt, Výdrž -->
+                <section class="bg-stone-950 p-4 rounded-xl border border-stone-800 space-y-4">
+                    <header class="flex justify-between items-center border-b border-stone-800 pb-2">
+                        <label class="text-sm font-semibold text-amber-200">Základní Atributy (Minimum je 5 bodů)</label>
+                        <span class="text-xs bg-amber-600/10 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-full">
+                            Volné body: <strong id="volne-body" class="font-bold text-amber-300">20</strong>
+                        </span>
+                    </header>
+                    <!-- Tady se kreslí plusy a mínusy -->
+                    <ul id="atributy-ovladani" class="space-y-3 p-0 m-0"></ul>
+                </section>
+
+                <!-- TLAČÍTKA NA KONCI FORMULÁŘE -->
+                <footer class="flex flex-col sm:flex-row gap-3 pt-2">
+                    <button id="btn-zrusit-tvorbu" type="button" class="sm:flex-1 bg-stone-800 text-stone-300 font-bold py-3 rounded-lg cursor-pointer">Zrušit</button>
+                    <button id="btn-ulozit-postavu" type="button" class="sm:flex-1 bg-amber-600 text-white font-bold py-3 rounded-lg cursor-pointer">Uložit hrdinu ⚔️</button>
+                </footer>
+            </form>
+        </section>
+    </main>
+
+    <!-- JAVASCRIPT - Logika aplikace (TypeScript se přeloží na JavaScript) -->
+    <script type="module" src="/javascript/script.js"></script>
 </body>
-<script type="module" src="/javascript/script.js"></script>
 </html>
